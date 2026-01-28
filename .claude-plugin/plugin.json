@@ -3,7 +3,7 @@
   "description": "Security Audit Plugin - Evidence-based security scanning with anti-hallucination rules. 12 categories, context-aware analysis, zero false positives.",
   "version": "2.0.0",
   "author": {
-    "name": "Ian Muench"
+    "name": "naieum"
   },
   "license": "MIT"
 }
