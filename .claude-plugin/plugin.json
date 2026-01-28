@@ -1,0 +1,9 @@
+{
+  "name": "sap",
+  "description": "Security Audit Plugin - Comprehensive 15-category security audit for web applications",
+  "version": "1.0.0",
+  "author": {
+    "name": "Ian Muench"
+  },
+  "license": "MIT"
+}

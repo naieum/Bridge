@@ -1,0 +1,12 @@
+{
+  "name": "sap",
+  "owner": { "name": "Ian Muench" },
+  "plugins": [
+    {
+      "name": "sap",
+      "source": ".",
+      "description": "Security Audit Plugin - 15-category security audit",
+      "version": "1.0.0"
+    }
+  ]
+}
