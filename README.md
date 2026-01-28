@@ -1,6 +1,6 @@
 # Bridge - Security Audit Plugin for Claude Code
 
-A Claude Code plugin that runs comprehensive security audits on your codebase. Just type `/security` and it'll check your app against 15 security categories.
+A Claude Code plugin that runs comprehensive security audits on your codebase. Just type `/security` and it'll check your app against 21 security categories.
 
 ## What it checks
 
@@ -14,7 +14,12 @@ A Claude Code plugin that runs comprehensive security audits on your codebase. J
 - Cryptography issues
 - Database security
 - Dangerous code patterns (eval, innerHTML, etc.)
-- And more...
+- AWS (IAM, S3, Security Groups, Lambda)
+- Google Cloud (IAM, GCS, Service Accounts, Cloud SQL)
+- Vercel (env exposure, headers, edge functions)
+- Azure (RBAC, Storage, NSGs, Key Vault)
+- Cloudflare (Workers, Pages, API tokens)
+- Firebase (Firestore/Storage rules, Auth, Cloud Functions)
 
 ## Installation
 

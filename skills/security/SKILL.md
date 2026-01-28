@@ -1,6 +1,6 @@
 ---
 name: security
-description: Comprehensive 15-category security audit for web applications. Use when performing security reviews, vulnerability assessments, or auditing code for security issues.
+description: Comprehensive 21-category security audit for web applications and cloud infrastructure. Use when performing security reviews, vulnerability assessments, or auditing code for security issues.
 ---
 
 # Security Audit
@@ -11,7 +11,7 @@ You are a security expert performing a comprehensive security audit.
 
 1. **READ-ONLY MODE**: DO NOT edit, write, or modify any files during the audit. Only use `Read`, `Grep`, and `Glob` tools to examine the codebase.
 
-2. **TRACK PROGRESS**: Use `TodoWrite` to track your progress through all 15 security categories. Add all categories as pending at the start.
+2. **TRACK PROGRESS**: Use `TodoWrite` to track your progress through all 21 security categories. Add all categories as pending at the start.
 
 3. **SEQUENTIAL EXECUTION**: Check ONE category at a time, in order. Do not parallelize or batch checks.
 
@@ -23,7 +23,7 @@ You are a security expert performing a comprehensive security audit.
 
 ## Execution Flow
 
-For EACH category (1-15), follow this exact pattern:
+For EACH category (1-21), follow this exact pattern:
 
 1. Mark the category as `in_progress` in TodoWrite
 2. Print: `## Checking [Category Name]...`
@@ -159,11 +159,85 @@ Check for these specific high-risk code patterns:
   - `${{ github.head_ref }}`
 - Should use `env:` variables with proper quoting instead
 
+### 16. AWS Security
+Check for AWS-specific vulnerabilities:
+
+- **IAM Policies**: Overly permissive `*` actions or `*` resources in policy files
+- **S3 Buckets**: Public access, missing `BlockPublicAccess` settings
+- **Security Groups**: Ingress rules with `0.0.0.0/0` on sensitive ports
+- **Hardcoded Credentials**: `AKIA*` access keys, secret keys in code
+- **Secrets Management**: Secrets in code vs AWS Secrets Manager/Parameter Store
+- **Lambda**: Environment variables containing secrets, overly permissive execution roles
+- **CloudFormation/Terraform**: Public resources, missing encryption settings
+
+Files to check: `*.tf`, `*.yaml`, `*.yml`, `serverless.yml`, `template.yaml`, `*.json` (CloudFormation)
+
+### 17. Google Cloud Security
+Check for GCP-specific vulnerabilities:
+
+- **IAM Bindings**: `allUsers` or `allAuthenticatedUsers` grants
+- **GCS Buckets**: Public ACLs, uniform bucket-level access disabled
+- **Service Account Keys**: `.json` key files committed to repo
+- **Firewall Rules**: Ingress `0.0.0.0/0` on sensitive ports
+- **Secrets**: Hardcoded vs Secret Manager
+- **Cloud SQL**: Public IP enabled, no SSL required
+
+Files to check: `*.tf`, `*.yaml`, `gcloud` commands in scripts, service account `*.json` files
+
+### 18. Vercel Security
+Check for Vercel-specific vulnerabilities:
+
+- **Environment Variables**: Secrets in `NEXT_PUBLIC_*` (exposed to client)
+- **vercel.json Headers**: Missing security headers configuration
+- **Preview Protection**: Sensitive previews without password protection
+- **Edge Functions**: Secrets in edge runtime (limited crypto APIs)
+- **Env Scoping**: Production secrets accessible in preview/development
+
+Files to check: `vercel.json`, `.env*`, `next.config.js`, edge function files
+
+### 19. Azure Security
+Check for Azure-specific vulnerabilities:
+
+- **RBAC**: Overly permissive role assignments, `Owner` at subscription level
+- **Storage Accounts**: Public blob access enabled, shared key access
+- **NSGs**: Inbound rules with `*` or `0.0.0.0/0` on sensitive ports
+- **Key Vault**: Secrets in code vs Key Vault references
+- **App Service**: HTTPS-only disabled, FTP enabled, managed identity not used
+- **Hardcoded Credentials**: Connection strings, SAS tokens in code
+- **ARM/Bicep Templates**: Public endpoints, missing encryption
+
+Files to check: `*.bicep`, `*.json` (ARM), `*.tf`, `appsettings*.json`, `*.config`
+
+### 20. Cloudflare Security
+Check for Cloudflare-specific vulnerabilities:
+
+- **Workers**: Secrets in code vs Workers Secrets/KV
+- **Pages**: `_headers` file missing security headers
+- **API Tokens**: Hardcoded tokens, overly permissive scopes
+- **Firewall Rules**: Bypasses, misconfigured WAF rules
+- **Access**: Sensitive routes without Cloudflare Access protection
+- **Environment Variables**: Secrets in `wrangler.toml` vs secrets
+
+Files to check: `wrangler.toml`, `_headers`, `_redirects`, worker scripts, `*.ts`/`*.js` in functions/
+
+### 21. Firebase Security
+Check for Firebase-specific vulnerabilities:
+
+- **Firestore Rules**: `allow read, write: if true` (wide open)
+- **Storage Rules**: Public read/write without auth checks
+- **Auth**: Email enumeration enabled, weak password requirements
+- **API Keys**: Firebase config exposed (check if restricted)
+- **Admin SDK**: Service account keys in repo, admin credentials in client code
+- **Cloud Functions**: Missing auth validation, CORS misconfiguration
+- **Database Rules**: `.read`/`.write` set to `true` at root
+
+Files to check: `firestore.rules`, `storage.rules`, `database.rules.json`, `firebase.json`, `**/firebase*.js`
+
 ---
 
 ## Final Report
 
-After completing ALL 15 categories, compile a final summary:
+After completing ALL 21 categories, compile a final summary:
 
 ```
 # Security Audit Report
