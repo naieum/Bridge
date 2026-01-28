@@ -22,20 +22,30 @@ Bridge gives Claude the security knowledge (what patterns to look for) but requi
 
 ## What it Checks
 
-### 12 Security Categories
+### 19 Security Categories
 
+**Core Security**
 1. **SQL Injection** - String concatenation in queries
 2. **XSS** - Unsafe HTML rendering
 3. **Hardcoded Secrets** - API keys, passwords in code
 4. **Authentication** - Missing auth, weak JWT, insecure sessions
 5. **SSRF** - User-controlled URLs in fetch/request
-6. **Supabase Security** - Missing RLS, service key exposure
-7. **Rate Limiting** - Unprotected auth endpoints
-8. **CORS** - Misconfigured cross-origin settings
-9. **Cryptography** - Weak hashing, predictable random
-10. **Dangerous Patterns** - Code evaluation, command injection
-11. **Cloud Security** - AWS/GCP/Azure misconfigurations
-12. **Data Exposure** - Secrets in logs, verbose errors
+6. **Rate Limiting** - Unprotected auth endpoints
+7. **CORS** - Misconfigured cross-origin settings
+8. **Cryptography** - Weak hashing, predictable random
+9. **Dangerous Patterns** - Code evaluation, command injection
+10. **Cloud Security** - AWS/GCP/Azure misconfigurations
+11. **Data Exposure** - Secrets in logs, verbose errors
+
+**Modern Stack Security**
+12. **Supabase** - Missing RLS, service role key exposure, wide-open policies
+13. **Stripe** - Secret key exposure, missing webhook signature verification
+14. **Auth Providers** - Clerk, Auth0, NextAuth secret exposure, missing middleware
+15. **AI APIs** - OpenAI/Anthropic key exposure, prompt injection, missing rate limits
+16. **Email Services** - Resend, SendGrid, Postmark key exposure, spam relay prevention
+17. **Database** - Prisma/Drizzle raw query injection, connection string exposure
+18. **Redis/Upstash** - Token exposure, unencrypted sensitive data in cache
+19. **Twilio** - Auth token exposure, SMS pumping prevention, webhook verification
 
 ## Installation
 
